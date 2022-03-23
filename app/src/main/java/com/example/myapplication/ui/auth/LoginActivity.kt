@@ -15,8 +15,7 @@ import com.example.myapplication.util.show
 import com.example.myapplication.util.toast
 import kotlinx.android.synthetic.main.activity_login.*
 
-
-class LoginActivity : AppCompatActivity(), AuthListener {
+class LoginActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,19 +26,19 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         val viewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
-        viewModel.authListener = this
-    }
+        viewModel.authListener = object : AuthListener {
+            override fun onStarted() {
+                progress_bar.show()
+            }
 
-    override fun onStarted() {
-        progress_bar.show()
-    }
+            override fun onSuccess(user: User) {
+                toast("${user.name} is logged In")
+            }
 
-    override fun onSuccess(user: User) {
-        toast("${user.name} is logged In")
-    }
-
-    override fun onFailure(message: String) {
-        progress_bar.hide()
-        toast("Failure message:$message")
+            override fun onFailure(message: String) {
+                progress_bar.hide()
+                toast("Failure message:$message")
+            }
+        }
     }
 }
