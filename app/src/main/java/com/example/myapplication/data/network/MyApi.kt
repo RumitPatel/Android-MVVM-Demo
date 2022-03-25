@@ -13,16 +13,25 @@ import retrofit2.http.POST
 interface MyApi {
 
     @FormUrlEncoded
-    @POST("login")
+    @POST("login/post_login")
     suspend fun userLogin(
-        @Field("email") email: String,
-        @Field("password") password: String
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("country_code") country_code: String,
+        @Field("country_short_name") country_short_name: String,
+        @Field("device_token") device_token: String,
+        @Field("login_type") login_type: String,
+        @Field("mobile_otp") mobile_otp: String,
+        @Field("facebook_id") facebook_id: String,
+        @Field("google_id") google_id: String,
+        @Field("name") name: String,
+        @Field("email") email: String
     ) : Response<AuthResponse>
 
     companion object{
         operator fun invoke() : MyApi{
             return Retrofit.Builder()
-                .baseUrl("https://api.simplifiedcoding.in/course-apis/mvvm/")
+                .baseUrl("https://dev.epharmaplatform.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MyApi::class.java)
