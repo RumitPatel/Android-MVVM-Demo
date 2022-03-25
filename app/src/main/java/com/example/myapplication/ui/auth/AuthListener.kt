@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.auth
 
-import androidx.lifecycle.LiveData
 import com.example.myapplication.data.db.entities.User
 
 interface AuthListener {

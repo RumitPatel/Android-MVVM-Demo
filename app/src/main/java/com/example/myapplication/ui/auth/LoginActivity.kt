@@ -1,12 +1,9 @@
 package com.example.myapplication.ui.auth
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
 import com.example.myapplication.data.db.entities.User
@@ -33,14 +30,16 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onSuccess(users: ArrayList<User>?) {
-                Log.d("ddd", if(!users.isNullOrEmpty()) "not empty" else "empty")
-                if(!users.isNullOrEmpty()){
-                    val user:User = users.get(0)
-                    if(!user.firstname.isEmpty()) {
-                       toast(user.firstname+" is logged In")
+                Log.d("ddd", if (!users.isNullOrEmpty()) "not empty" else "empty")
+                if (!users.isNullOrEmpty()) {
+                    val user: User = users.get(0)
+                    if (!user.firstname.isEmpty()) {
+                        toast(user.firstname + " is logged In")
                     } else {
                         toast("User Not getting after login")
                     }
+                } else {
+                    toast("Getting user arrary empty")
                 }
 
                 progress_bar.hide()
