@@ -1,7 +1,6 @@
 package com.example.myapplication.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -14,7 +13,6 @@ import com.example.myapplication.util.toast
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +28,6 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onSuccess(users: ArrayList<User>?) {
-                Log.d("ddd", if (!users.isNullOrEmpty()) "not empty" else "empty")
                 if (!users.isNullOrEmpty()) {
                     val user: User = users.get(0)
                     if (!user.firstname.isEmpty()) {
@@ -44,7 +41,6 @@ class LoginActivity : AppCompatActivity() {
 
                 progress_bar.hide()
             }
-
 
             override fun onFailure(message: String) {
                 progress_bar.hide()
