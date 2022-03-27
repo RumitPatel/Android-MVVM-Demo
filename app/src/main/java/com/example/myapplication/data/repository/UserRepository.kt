@@ -16,7 +16,7 @@ class UserRepository : SafeAPIRequest() {
         facebook_id: String,
         google_id: String,
         name: String,
-        email: String,
+        email: String
     ): AuthResponse {
 
         return apiRequest {
@@ -31,7 +31,7 @@ class UserRepository : SafeAPIRequest() {
                 facebook_id,
                 google_id,
                 name,
-                email,
+                email
             )
         }
     }
