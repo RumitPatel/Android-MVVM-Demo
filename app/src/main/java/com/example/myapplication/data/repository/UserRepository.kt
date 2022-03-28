@@ -1,10 +1,15 @@
 package com.example.myapplication.data.repository
 
+import com.example.myapplication.data.db.AppDatabase
+import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.data.network.MyApi
 import com.example.myapplication.data.network.SafeAPIRequest
 import com.example.myapplication.data.network.responses.AuthResponse
 
-class UserRepository : SafeAPIRequest() {
+class UserRepository(
+    private val api: MyApi,
+    private val db: AppDatabase
+) : SafeAPIRequest() {
     suspend fun userLogin(
         username: String,
         password: String,
@@ -20,7 +25,7 @@ class UserRepository : SafeAPIRequest() {
     ): AuthResponse {
 
         return apiRequest {
-            MyApi().userLogin(
+            api.userLogin(
                 username,
                 password,
                 country_code,
@@ -35,4 +40,6 @@ class UserRepository : SafeAPIRequest() {
             )
         }
     }
+
+    suspend fun saveUser(user: User) = db.getUserDao().upsert(user)
 }
