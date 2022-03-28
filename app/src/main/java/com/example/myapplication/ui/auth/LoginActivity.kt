@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
+import com.example.myapplication.data.db.AppDatabase
 import com.example.myapplication.data.db.entities.User
+import com.example.myapplication.data.network.MyApi
+import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.util.hide
 import com.example.myapplication.util.show
@@ -17,9 +20,14 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val api = MyApi()
+        val db = AppDatabase(this)
+        val repository = UserRepository(api, db)
+        val factory = AuthViewModelFactory(repository)
+
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
-        val viewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
         viewModel.authListener = object : AuthListener {
