@@ -4,6 +4,6 @@ import com.example.myapplication.data.db.entities.User
 
 interface AuthListener {
     fun onStarted()
-    fun onSuccess(users: User?)
+    fun onSuccess(user: User?)
     fun onFailure(message: String)
 }

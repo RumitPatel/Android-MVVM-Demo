@@ -1,15 +1,19 @@
 package com.example.myapplication.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
 import com.example.myapplication.data.db.AppDatabase
 import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.data.network.MyApi
+import com.example.myapplication.data.network.NetworkConnectionInterceptor
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.databinding.ActivityLoginBinding
+import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.util.hide
 import com.example.myapplication.util.show
 import com.example.myapplication.util.toast
@@ -20,7 +24,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val api = MyApi()
+        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+        val api = MyApi(networkConnectionInterceptor)
         val db = AppDatabase(this)
         val repository = UserRepository(api, db)
         val factory = AuthViewModelFactory(repository)
@@ -35,16 +40,11 @@ class LoginActivity : AppCompatActivity() {
                 progress_bar.show()
             }
 
-            override fun onSuccess(users: ArrayList<User>?) {
-                if (!users.isNullOrEmpty()) {
-                    val user: User = users.get(0)
-                    if (!user.firstname.isEmpty()) {
-                        toast(user.firstname + " is logged In")
-                    } else {
-                        toast("User Not getting after login")
-                    }
+            override fun onSuccess(user: User?) {
+                if (!user!!.firstname.isEmpty()) {
+                    toast(user.firstname + " is logged In")
                 } else {
-                    toast("Getting user arrary empty")
+                    toast("User Not getting after login")
                 }
 
                 progress_bar.hide()
@@ -55,5 +55,14 @@ class LoginActivity : AppCompatActivity() {
                 toast("Failure message:$message")
             }
         }
+
+        viewModel.getLoggedInUser().observe(this, Observer { user ->
+            if (user != null) {
+                Intent(this, HomeActivity::class.java).also {
+                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(it)
+                }
+            }
+        })
     }
 }

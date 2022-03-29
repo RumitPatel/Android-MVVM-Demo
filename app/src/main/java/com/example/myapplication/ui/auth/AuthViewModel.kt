@@ -7,6 +7,7 @@ import com.example.myapplication.data.network.responses.AuthResponse
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.util.ApiException
 import com.example.myapplication.util.Coroutines
+import com.example.myapplication.util.NoInternetException
 
 class AuthViewModel(
     private val repository: UserRepository
@@ -15,6 +16,8 @@ class AuthViewModel(
     var password: String? = "111111"
 
     var authListener: AuthListener? = null
+
+    fun getLoggedInUser() = repository.getUser()
 
     fun onLoginButtonClicked(view: View) {
         authListener?.onStarted()
@@ -52,6 +55,8 @@ class AuthViewModel(
                 }
                 authListener?.onFailure(authResponse.msg!!)
             } catch (e: ApiException) {
+                authListener?.onFailure(e.message!!)
+            } catch (e: NoInternetException) {
                 authListener?.onFailure(e.message!!)
             }
         }

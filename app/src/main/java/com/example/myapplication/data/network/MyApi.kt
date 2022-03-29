@@ -1,8 +1,7 @@
 package com.example.myapplication.data.network
 
 import com.example.myapplication.data.network.responses.AuthResponse
-import okhttp3.ResponseBody
-import retrofit2.Call
+import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,11 +25,18 @@ interface MyApi {
         @Field("google_id") google_id: String,
         @Field("name") name: String,
         @Field("email") email: String
-    ) : Response<AuthResponse>
+    ): Response<AuthResponse>
 
-    companion object{
-        operator fun invoke() : MyApi{
+    companion object {
+        operator fun invoke(
+            networkConnectionInterceptor: NetworkConnectionInterceptor
+        ): MyApi {
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(networkConnectionInterceptor)
+                .build()
+
             return Retrofit.Builder()
+                .client(okHttpClient)
                 .baseUrl("https://dev.epharmaplatform.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
