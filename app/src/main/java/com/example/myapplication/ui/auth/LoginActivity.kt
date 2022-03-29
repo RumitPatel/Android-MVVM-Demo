@@ -10,6 +10,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.db.AppDatabase
 import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.data.network.MyApi
+import com.example.myapplication.data.network.NetworkConnectionInterceptor
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.ui.home.HomeActivity
@@ -23,7 +24,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val api = MyApi()
+        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+        val api = MyApi(networkConnectionInterceptor)
         val db = AppDatabase(this)
         val repository = UserRepository(api, db)
         val factory = AuthViewModelFactory(repository)
