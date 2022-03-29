@@ -2,6 +2,7 @@ package com.example.myapplication.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.data.network.responses.AuthResponse
 import com.example.myapplication.data.repository.UserRepository
 import com.example.myapplication.util.ApiException
@@ -38,13 +39,18 @@ class AuthViewModel(
                     ""
                 )
                 authResponse.result?.let {
-                    authListener?.onSuccess(it)
-                    return@main
+                    val userList: ArrayList<User> = it
+                    if (!userList.isNullOrEmpty()
+                        && userList.get(0).firstname.isNotEmpty()
+                    ) {
+                        authListener?.onSuccess(userList.get(0))
+                        repository.saveUser(userList.get(0))
+                        return@main
+                    } else {
+                        authListener?.onFailure(authResponse.msg!!)
+                    }
                 }
-
                 authListener?.onFailure(authResponse.msg!!)
-
-                authListener?.onSuccess(authResponse.result)
             } catch (e: ApiException) {
                 authListener?.onFailure(e.message!!)
             }
