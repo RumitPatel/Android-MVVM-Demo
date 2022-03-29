@@ -20,12 +20,12 @@ data class User(
     val country_code: String,
     val country_short_name: String,
     val firstname: String,
-    val city: String,
-    val cart_count: String,
-    val gender: String,
-    val age: String,
-    val mobile: String,
-    val login_type:String
+//    val city: String,
+//    val cart_count: String,
+//    val gender: String,
+//    val age: String,
+//    val mobile: String,
+//    val login_type:String
 ) {
     @PrimaryKey(autoGenerate = false)
     var uid: Int = CURRENT_USER_ID
