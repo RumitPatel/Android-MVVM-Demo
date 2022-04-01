@@ -27,11 +27,18 @@ interface MyApi {
         @Field("email") email: String
     ): Response<AuthResponse>
 
-    @POST("")
+    @FormUrlEncoded
+    @POST("register/register_user")
     suspend fun userSignUp(
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String
+        @Field("first_name") first_name: String?,
+        @Field("mobile") mobile: String?,
+        @Field("email") email: String?,
+        @Field("country_code") code: String?,
+        @Field("country_short_name") countryShortName: String?,
+        @Field("password") password: String?,
+        @Field("device_token") device_token: String?,
+        @Field("device_type") device_type: String?,
+        @Field("version_code_android") temp_version_code: String?
     ): Response<AuthResponse>
 
     companion object {

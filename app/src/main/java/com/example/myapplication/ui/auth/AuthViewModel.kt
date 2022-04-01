@@ -103,18 +103,16 @@ class AuthViewModel(
 
         Coroutines.main {
             try {
-                val authResponse: AuthResponse = repository.userLogin(
+                val authResponse: AuthResponse = repository.userSignup(
+                    name!!,
+                    email!!,
                     email!!,
                     password!!,
                     "91",
                     "IN",
-                    "abc",
-                    "login_password",
                     "",
-                    "",
-                    "",
-                    "",
-                    ""
+                    "android",
+                    "51"
                 )
                 authResponse.result?.let {
                     val userList: ArrayList<User> = it
