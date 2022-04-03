@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
             }
 
             override fun onSuccess(user: User?) {
-                if (!user!!.firstname.isEmpty()) {
+                if (user!!.firstname.isNotEmpty()) {
                     toast(user.firstname + " is logged In")
                 } else {
                     toast("User Not getting after login")
