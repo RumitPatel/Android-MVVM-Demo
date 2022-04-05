@@ -17,7 +17,7 @@ class HomeActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         val navController = navHostFragment.navController
-//        val navController = Navigation.findNavController(this, R.id.fragment)
+//        val navController = Navigation.findNavController(this, R.id.fragment)// Crash issue resolved.
         NavigationUI.setupWithNavController(nav_view, navController)
         NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout)
     }
