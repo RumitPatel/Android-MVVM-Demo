@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/blankTestFragment"
-        android:name="com.example.myapplication.ui.home.profile.BlankTestFragment"
+        android:name="com.example.myapplication.ui.home.profile.ProfileFragment"
         android:label="fragment_blank_test"
-        tools:layout="@layout/fragment_blank_test" />
+        tools:layout="@layout/profile_fragment" />
 </navigation>
