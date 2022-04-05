@@ -1,12 +1,14 @@
 package com.example.myapplication.data.network
 
 import com.example.myapplication.data.network.responses.AuthResponse
+import com.example.myapplication.data.network.responses.QuotesResponse
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface MyApi {
@@ -40,6 +42,9 @@ interface MyApi {
         @Field("device_type") device_type: String?,
         @Field("version_code_android") temp_version_code: String?
     ): Response<AuthResponse>
+
+    @GET("quotes")
+    suspend fun getQuotes() : Response<QuotesResponse>
 
     companion object {
         operator fun invoke(
