@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="quote"
             type="com.example.myapplication.data.db.entities.Quote" />
