@@ -5,5 +5,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "MVVM-Demo"
+rootProject.name = "Android-MVVM-Demo"
 include ':app'
