@@ -10,6 +10,7 @@ class UserRepository(
     private val api: MyApi,
     private val db: AppDatabase
 ) : SafeAPIRequest() {
+
     suspend fun userLogin(
         username: String,
         password: String,
@@ -48,8 +49,7 @@ class UserRepository(
         password: String,
         country_code: String,
         country_short_name: String,
-        device_token: String,
-        login_type: String,
+        device_type: String,
         temp_version_code: String
     ): AuthResponse {
         return apiRequest {
@@ -60,8 +60,7 @@ class UserRepository(
                 country_code,
                 country_short_name,
                 password,
-                device_token,
-                login_type,
+                device_type,
                 temp_version_code,
             )
         }
