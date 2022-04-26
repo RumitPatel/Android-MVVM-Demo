@@ -3,6 +3,8 @@ package com.example.myapplication.ui.auth
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.data.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AuthViewModel(
     private val repository: UserRepository
@@ -13,13 +15,38 @@ class AuthViewModel(
     suspend fun userLogin(
         email: String,
         password: String
-    ) = repository.userLogin(email, password, "91", "IN", "abcd1234", "", "", "", "", "", email)
+    ) = withContext(Dispatchers.IO) {
+        repository.userLogin(
+            email,
+            password,
+            "91",
+            "IN",
+            "abcd1234",
+            "",
+            "",
+            "",
+            "",
+            "",
+            email
+        )
+    }
 
     suspend fun userSignup(
         name: String,
         email: String,
         password: String
-    ) = repository.userSignup(name, email, email, password, "91", "IN", "android", "50")
+    ) = withContext(Dispatchers.IO) {
+        repository.userSignup(
+            name,
+            email,
+            email,
+            password,
+            "91",
+            "IN",
+            "android",
+            "50"
+        )
+    }
 
     suspend fun saveLoggedInUser(user: User) = repository.saveUser(user)
 }
