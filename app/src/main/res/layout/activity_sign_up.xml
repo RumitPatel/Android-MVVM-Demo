@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewmodel"
-            type="com.example.myapplication.ui.auth.AuthViewModel" />
-    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -78,8 +72,7 @@
                     android:drawablePadding="16dp"
                     android:hint="Belal Khan"
                     android:inputType="text"
-                    android:padding="12dp"
-                    android:text="@={viewmodel.name}" />
+                    android:padding="12dp" />
 
                 <EditText
                     android:id="@+id/edit_text_email"
@@ -91,8 +84,7 @@
                     android:drawablePadding="16dp"
                     android:hint="belal@gmail.com"
                     android:inputType="textEmailAddress"
-                    android:padding="12dp"
-                    android:text="@={viewmodel.email}" />
+                    android:padding="12dp" />
 
                 <EditText
                     android:id="@+id/edit_text_password"
@@ -104,8 +96,7 @@
                     android:drawablePadding="16dp"
                     android:hint="password"
                     android:inputType="textPassword"
-                    android:padding="12dp"
-                    android:text="@={viewmodel.password}" />
+                    android:padding="12dp" />
 
                 <EditText
                     android:id="@+id/edit_text_password_confirm"
@@ -117,8 +108,7 @@
                     android:drawablePadding="16dp"
                     android:hint="confirm password"
                     android:inputType="textPassword"
-                    android:padding="12dp"
-                    android:text="@={viewmodel.passwordConfirm}" />
+                    android:padding="12dp" />
 
                 <TextView
                     android:id="@+id/text_view_forget_password"
@@ -134,7 +124,6 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="@{viewmodel.onSignupButtonClicked}"
                     android:text="Sign Up"
                     android:textAllCaps="false" />
 
@@ -147,7 +136,6 @@
                 android:layout_below="@id/linearLayout2"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
-                android:onClick="@{viewmodel.onLogin}"
                 android:text="Already have an account?\nSign in Here"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"

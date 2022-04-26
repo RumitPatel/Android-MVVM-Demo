@@ -38,7 +38,6 @@ interface MyApi {
         @Field("country_code") code: String?,
         @Field("country_short_name") countryShortName: String?,
         @Field("password") password: String?,
-        @Field("device_token") device_token: String?,
         @Field("device_type") device_type: String?,
         @Field("version_code_android") temp_version_code: String?
     ): Response<AuthResponse>
