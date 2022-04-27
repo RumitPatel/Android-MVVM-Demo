@@ -2,10 +2,8 @@ package com.example.myapplication.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
@@ -33,40 +31,16 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
 
-
-/*
-        viewModel.authListener = object : AuthListener {
-            override fun onStarted() {
-                progress_bar.show()
-            }
-
-            override fun onSuccess(user: User?) {
-                if (!user!!.firstname.isEmpty()) {
-                    toast(user.firstname + " is logged In")
-                } else {
-                    toast("User Not getting after login")
-                }
-
-                progress_bar.hide()
-            }
-
-            override fun onFailure(message: String) {
-                progress_bar.hide()
-                toast("Failure message:$message")
-            }
-        }
-*/
-
-        viewModel.getLoggedInUser().observe(this, Observer { user ->
+        viewModel.getLoggedInUser().observe(this) { user ->
             if (user != null) {
                 Intent(this, HomeActivity::class.java).also {
                     it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(it)
                 }
             }
-        })
+        }
 
-        binding.buttonSignUp.setOnClickListener(View.OnClickListener {
+        binding.buttonSignUp.setOnClickListener {
             val name = binding.editTextName.text.toString().trim()
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
@@ -94,6 +68,6 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
                 }
             }
 
-        })
+        }
     }
 }
