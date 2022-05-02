@@ -46,28 +46,31 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
             val password = binding.editTextPassword.text.toString().trim()
             val passwordConfirm = binding.editTextPasswordConfirm.text.toString().trim()
 
-            //todo validate input
-
-            lifecycleScope.launch {
-                try {
-                    val authResponse = viewModel.userSignup(name, email, password)
-                    authResponse.result?.let {
-                        val userList: ArrayList<User> = it
-                        if (!userList.isNullOrEmpty() && userList[0].firstname.isNotEmpty()
-                        ) {
-                            viewModel.saveLoggedInUser(userList[0])
-                        } else {
-                            binding.root.snackbar(authResponse.msg!!)
+            if (isValidDataToLogin()) {
+                lifecycleScope.launch {
+                    try {
+                        val authResponse = viewModel.userSignup(name, email, password)
+                        authResponse.result?.let {
+                            val userList: ArrayList<User> = it
+                            if (!userList.isNullOrEmpty() && userList[0].firstname.isNotEmpty()
+                            ) {
+                                viewModel.saveLoggedInUser(userList[0])
+                            } else {
+                                binding.root.snackbar(authResponse.msg!!)
+                            }
                         }
-                    }
 
-                } catch (e: ApiException) {
-                    e.printStackTrace()
-                } catch (e: NoInternetException) {
-                    e.printStackTrace()
+                    } catch (e: ApiException) {
+                        e.printStackTrace()
+                    } catch (e: NoInternetException) {
+                        e.printStackTrace()
+                    }
                 }
             }
-
         }
+    }
+
+    private fun isValidDataToLogin(): Boolean {
+        return true//todo validation pending
     }
 }
