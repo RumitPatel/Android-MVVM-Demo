@@ -57,26 +57,30 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         val email = binding.editTextEmail.text.toString().trim()
         val password = binding.editTextPassword.text.toString().trim()
 
-        //todo validate user input
+        if(isValidDataToLogin()) {
 
-        lifecycleScope.launch {
-            try {
-                val authResponse = viewModel.userLogin(email, password)
-                authResponse.result?.let {
-                    val userList: ArrayList<User> = it
-                    if (!userList.isNullOrEmpty() && userList[0].firstname.isNotEmpty()
-                    ) {
-                        viewModel.saveLoggedInUser(userList[0])
-                    } else {
-                        binding.rootLayout.snackbar(authResponse.msg!!)
+            lifecycleScope.launch {
+                try {
+                    val authResponse = viewModel.userLogin(email, password)
+                    authResponse.result?.let {
+                        val userList: ArrayList<User> = it
+                        if (!userList.isNullOrEmpty() && userList[0].firstname.isNotEmpty()
+                        ) {
+                            viewModel.saveLoggedInUser(userList[0])
+                        } else {
+                            binding.rootLayout.snackbar(authResponse.msg!!)
+                        }
                     }
-                }
 
-            } catch (e: ApiException) {
-                e.printStackTrace()
-            } catch (e: NoInternetException) {
-                e.printStackTrace()
-            }
-        }
+                } catch (e: ApiException) {
+                    e.printStackTrace()
+                } catch (e: NoInternetException) {
+                    e.printStackTrace()
+                }
+            }        }
+    }
+
+    private fun isValidDataToLogin():Boolean {
+        return true//todo validation pending
     }
 }
