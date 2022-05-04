@@ -32,19 +32,27 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initComponents()
+        setListeners()
+    }
+
+    private fun initComponents() {
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
 
 
         viewModel.getLoggedInUser().observe(this, Observer { user ->
             if (user != null) {
-                Intent(this, HomeActivity::class.java).also {
+                Intent(applicationContext, HomeActivity::class.java).also {
                     it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(it)
                 }
             }
         })
+    }
 
+    private fun setListeners() {
         binding.buttonSignIn.setOnClickListener(View.OnClickListener {
             loginUser()
         })
