@@ -10,10 +10,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.ui.home.HomeActivity
-import com.example.myapplication.util.ApiException
-import com.example.myapplication.util.NoInternetException
-import com.example.myapplication.util.snackbar
-import com.example.myapplication.util.toast
+import com.example.myapplication.util.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -90,12 +87,12 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 
     private fun isValidDataToLogin(): Boolean {
         return when {
-            binding.editTextEmail.text.toString().isEmpty() -> {
-                toast("Invalid Email")
+            binding.editTextEmail.text.toString().trim().isEmpty() -> {
+                binding.rootLayout.snackbar("Invalid Email")
                 false
             }
-            binding.editTextPassword.text.toString().isEmpty() -> {
-                toast("Invalid Password")
+            binding.editTextPassword.text.toString().trim().isEmpty() -> {
+                binding.rootLayout.snackbar("Invalid Password")
                 false
             }
             else -> true
