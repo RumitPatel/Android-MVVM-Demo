@@ -29,8 +29,15 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initComponents()
+        setListeners()
+
+    }
+
+    private fun initComponents() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
-        viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
 
         viewModel.getLoggedInUser().observe(this) { user ->
             if (user != null) {
@@ -40,12 +47,13 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
                 }
             }
         }
+    }
 
+    private fun setListeners() {
         binding.buttonSignUp.setOnClickListener {
             val name = binding.editTextName.text.toString().trim()
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
-            val passwordConfirm = binding.editTextPasswordConfirm.text.toString().trim()
 
             if (isValidDataToLogin()) {
                 lifecycleScope.launch {
@@ -72,19 +80,24 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun isValidDataToLogin(): Boolean {
-        if (binding.editTextName.text.toString().isEmpty()) {
-            toast("Invalid Name")
-            return false
-        } else if (binding.editTextEmail.text.toString().isEmpty()) {
-            toast("Invalid Email")
-            return false
-        } else if (binding.editTextPassword.text.toString().isEmpty()) {
-            toast("Invalid Password")
-            return false
-        } else if (binding.editTextPasswordConfirm.text.toString().isEmpty()) {
-            toast("Invalid Confirm Password")
-            return false
+        return when {
+            binding.editTextName.text.toString().isEmpty() -> {
+                toast("Invalid Name")
+                false
+            }
+            binding.editTextEmail.text.toString().isEmpty() -> {
+                toast("Invalid Email")
+                false
+            }
+            binding.editTextPassword.text.toString().isEmpty() -> {
+                toast("Invalid Password")
+                false
+            }
+            binding.editTextPasswordConfirm.text.toString().isEmpty() -> {
+                toast("Invalid Confirm Password")
+                false
+            }
+            else -> true
         }
-        return true
     }
 }
