@@ -15,6 +15,7 @@ import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.util.ApiException
 import com.example.myapplication.util.NoInternetException
 import com.example.myapplication.util.snackbar
+import com.example.myapplication.util.toast
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -57,7 +58,7 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         val email = binding.editTextEmail.text.toString().trim()
         val password = binding.editTextPassword.text.toString().trim()
 
-        if(isValidDataToLogin()) {
+        if (isValidDataToLogin()) {
 
             lifecycleScope.launch {
                 try {
@@ -77,10 +78,18 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
                 } catch (e: NoInternetException) {
                     e.printStackTrace()
                 }
-            }        }
+            }
+        }
     }
 
-    private fun isValidDataToLogin():Boolean {
-        return true//todo validation pending
+    private fun isValidDataToLogin(): Boolean {
+        if (binding.editTextEmail.text.toString().isEmpty()) {
+            toast("Invalid Email")
+            return false
+        } else if (binding.editTextPassword.text.toString().isEmpty()) {
+            toast("Invalid Password")
+            return false
+        }
+        return true
     }
 }

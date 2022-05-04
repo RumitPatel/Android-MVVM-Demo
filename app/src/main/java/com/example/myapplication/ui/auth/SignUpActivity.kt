@@ -13,6 +13,7 @@ import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.util.ApiException
 import com.example.myapplication.util.NoInternetException
 import com.example.myapplication.util.snackbar
+import com.example.myapplication.util.toast
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -71,6 +72,19 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun isValidDataToLogin(): Boolean {
-        return true//todo validation pending
+        if (binding.editTextName.text.toString().isEmpty()) {
+            toast("Invalid Name")
+            return false
+        } else if (binding.editTextEmail.text.toString().isEmpty()) {
+            toast("Invalid Email")
+            return false
+        } else if (binding.editTextPassword.text.toString().isEmpty()) {
+            toast("Invalid Password")
+            return false
+        } else if (binding.editTextPasswordConfirm.text.toString().isEmpty()) {
+            toast("Invalid Confirm Password")
+            return false
+        }
+        return true
     }
 }
