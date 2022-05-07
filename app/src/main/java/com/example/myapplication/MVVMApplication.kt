@@ -1,6 +1,8 @@
 package com.example.myapplication
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.myapplication.data.db.AppDatabase
 import com.example.myapplication.data.network.MyApi
 import com.example.myapplication.data.network.NetworkConnectionInterceptor
@@ -19,6 +21,7 @@ import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
 class MVVMApplication : Application(), KodeinAware {
+    @RequiresApi(Build.VERSION_CODES.O)
     override val kodein = Kodein.lazy {
         import(androidXModule(this@MVVMApplication))
         bind() from singleton { NetworkConnectionInterceptor(instance()) }
