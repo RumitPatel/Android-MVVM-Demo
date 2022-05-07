@@ -22,7 +22,9 @@ class UserRepository(
         facebook_id: String,
         google_id: String,
         name: String,
-        email: String
+        email: String,
+        device_type: String,
+        version_code_android: String
     ): AuthResponse {
 
         return apiRequest {
@@ -37,7 +39,9 @@ class UserRepository(
                 facebook_id,
                 google_id,
                 name,
-                email
+                email,
+                device_type,
+                version_code_android
             )
         }
     }

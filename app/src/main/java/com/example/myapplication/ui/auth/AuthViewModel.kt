@@ -27,7 +27,9 @@ class AuthViewModel(
             "",
             "",
             "",
-            email
+            email,
+            "android",
+            "60"
         )
     }
 
@@ -44,7 +46,7 @@ class AuthViewModel(
             "91",
             "IN",
             "android",
-            "50"
+            "60"
         )
     }
 

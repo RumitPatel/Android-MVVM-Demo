@@ -26,7 +26,9 @@ interface MyApi {
         @Field("facebook_id") facebook_id: String,
         @Field("google_id") google_id: String,
         @Field("name") name: String,
-        @Field("email") email: String
+        @Field("email") email: String,
+        @Field("device_type") device_type: String?,
+        @Field("version_code_android") temp_version_code: String?
     ): Response<AuthResponse>
 
     @FormUrlEncoded
@@ -47,10 +49,12 @@ interface MyApi {
 
     companion object {
         operator fun invoke(
-            networkConnectionInterceptor: NetworkConnectionInterceptor
+            networkConnectionInterceptor: NetworkConnectionInterceptor,
+            headerInterceptor: HeaderInterceptor
         ): MyApi {
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(networkConnectionInterceptor)
+                .addInterceptor(headerInterceptor)
                 .build()
 
             return Retrofit.Builder()

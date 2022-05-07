@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.myapplication.data.db.AppDatabase
+import com.example.myapplication.data.network.HeaderInterceptor
 import com.example.myapplication.data.network.MyApi
 import com.example.myapplication.data.network.NetworkConnectionInterceptor
 import com.example.myapplication.data.repository.QuotesRepository
@@ -25,7 +26,8 @@ class MVVMApplication : Application(), KodeinAware {
     override val kodein = Kodein.lazy {
         import(androidXModule(this@MVVMApplication))
         bind() from singleton { NetworkConnectionInterceptor(instance()) }
-        bind() from singleton { MyApi(instance()) }
+        bind() from singleton { HeaderInterceptor(instance()) }
+        bind() from singleton { MyApi(instance(), instance()) }
         bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { UserRepository(instance(), instance()) }

@@ -80,8 +80,9 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 
                 } catch (e: ApiException) {
                     e.printStackTrace()
+                    toast("Error: " + e.message)
                 } catch (e: NoInternetException) {
-                    e.printStackTrace()
+                    toast("Error: " + e.message)
                 }
             }
         }
