@@ -36,6 +36,8 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
 
+        binding.editTextEmail.setText("9999999999")
+        binding.editTextPassword.setText("111111")
 
         viewModel.getLoggedInUser().observe(this) { user ->
             if (user != null) {
