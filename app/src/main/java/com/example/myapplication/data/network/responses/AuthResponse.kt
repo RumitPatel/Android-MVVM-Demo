@@ -5,5 +5,5 @@ import com.example.myapplication.data.db.entities.User
 data class AuthResponse(
     val status: String?,
     val msg: String?,
-    val result: ArrayList<User>?
+    val result: User?
 )

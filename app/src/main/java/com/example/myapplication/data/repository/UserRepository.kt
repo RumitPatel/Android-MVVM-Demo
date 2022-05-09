@@ -17,14 +17,7 @@ class UserRepository(
         country_code: String,
         country_short_name: String,
         device_token: String,
-        login_type: String,
-        mobile_otp: String,
-        facebook_id: String,
-        google_id: String,
-        name: String,
-        email: String,
-        device_type: String,
-        version_code_android: String
+        login_type: String
     ): AuthResponse {
 
         return apiRequest {
@@ -34,14 +27,7 @@ class UserRepository(
                 country_code,
                 country_short_name,
                 device_token,
-                login_type,
-                mobile_otp,
-                facebook_id,
-                google_id,
-                name,
-                email,
-                device_type,
-                version_code_android
+                login_type
             )
         }
     }

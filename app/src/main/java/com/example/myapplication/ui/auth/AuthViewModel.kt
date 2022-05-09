@@ -22,14 +22,7 @@ class AuthViewModel(
             "91",
             "IN",
             "abcd1234",
-            "",
-            "",
-            "",
-            "",
-            "",
-            email,
-            "android",
-            "60"
+            "login_password"
         )
     }
 
