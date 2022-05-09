@@ -71,7 +71,7 @@
                     android:background="@drawable/edit_text_round_gray_background"
                     android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="16dp"
-                    android:hint="rumitexample@gmail.com"
+                    android:hint="Enter email or phone number"
                     android:inputType="textEmailAddress"
                     android:padding="12dp" />
 
