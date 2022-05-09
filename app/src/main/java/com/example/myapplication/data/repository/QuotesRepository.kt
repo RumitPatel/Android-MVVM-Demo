@@ -32,7 +32,6 @@ class QuotesRepository(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getQuotes(): LiveData<List<Quote>> {
         return withContext(Dispatchers.IO) {
             fetchQuotes()
@@ -40,7 +39,6 @@ class QuotesRepository(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun fetchQuotes() {
         val lastSavedAt = prefs.getLastSavedAt()
 
@@ -54,12 +52,10 @@ class QuotesRepository(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun isFetchNeeded(savedAt: LocalDateTime): Boolean {
         return ChronoUnit.HOURS.between(savedAt, LocalDateTime.now()) > MINIMUM_INTERVAL
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun saveQuotes(quotes: List<Quote>) {
         Coroutines.io {
             prefs.savelastSavedAt(LocalDateTime.now().toString())
