@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
                     val authResponse = viewModel.userLogin(email, password)
                     authResponse.result?.let {
                         val user: User = it
-                        if (user.firstname.isNotEmpty()
+                        if (user.auth_token.isNotEmpty()
                         ) {
                             viewModel.saveLoggedInUser(user)
                         } else {
