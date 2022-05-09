@@ -22,12 +22,7 @@ class AuthViewModel(
             "91",
             "IN",
             "abcd1234",
-            "",
-            "",
-            "",
-            "",
-            "",
-            email
+            "login_password"
         )
     }
 
@@ -44,7 +39,7 @@ class AuthViewModel(
             "91",
             "IN",
             "android",
-            "50"
+            "60"
         )
     }
 

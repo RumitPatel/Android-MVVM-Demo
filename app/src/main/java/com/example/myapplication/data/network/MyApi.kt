@@ -1,8 +1,10 @@
 package com.example.myapplication.data.network
 
+import com.example.myapplication.BuildConfig
 import com.example.myapplication.data.network.responses.AuthResponse
 import com.example.myapplication.data.network.responses.QuotesResponse
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,19 +16,14 @@ import retrofit2.http.POST
 interface MyApi {
 
     @FormUrlEncoded
-    @POST("login/post_login")
+    @POST("login")
     suspend fun userLogin(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("country_code") country_code: String,
         @Field("country_short_name") country_short_name: String,
         @Field("device_token") device_token: String,
-        @Field("login_type") login_type: String,
-        @Field("mobile_otp") mobile_otp: String,
-        @Field("facebook_id") facebook_id: String,
-        @Field("google_id") google_id: String,
-        @Field("name") name: String,
-        @Field("email") email: String
+        @Field("login_type") login_type: String
     ): Response<AuthResponse>
 
     @FormUrlEncoded
@@ -43,19 +40,27 @@ interface MyApi {
     ): Response<AuthResponse>
 
     @GET("quotes")
-    suspend fun getQuotes() : Response<QuotesResponse>
+    suspend fun getQuotes(): Response<QuotesResponse>
 
     companion object {
         operator fun invoke(
-            networkConnectionInterceptor: NetworkConnectionInterceptor
+            networkConnectionInterceptor: NetworkConnectionInterceptor,
+            headerInterceptor: HeaderInterceptor
         ): MyApi {
-            val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(networkConnectionInterceptor)
-                .build()
+            val httpLoggingInterceptor = HttpLoggingInterceptor()
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            val okHttpClient = OkHttpClient.Builder().apply {
+                addInterceptor(networkConnectionInterceptor)
+                addInterceptor(headerInterceptor)
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(httpLoggingInterceptor)
+                }
+            }.build()
 
             return Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("https://dev.epharmaplatform.com/api/")
+                .baseUrl("https://subtest.epharmaplatform.com/api_v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MyApi::class.java)

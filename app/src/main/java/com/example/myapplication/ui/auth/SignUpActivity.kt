@@ -59,10 +59,10 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
                     try {
                         val authResponse = viewModel.userSignup(name, email, password)
                         authResponse.result?.let {
-                            val userList: ArrayList<User> = it
-                            if (!userList.isNullOrEmpty() && userList[0].firstname.isNotEmpty()
+                            val user: User = it
+                            if (user.firstname.isNotEmpty()
                             ) {
-                                viewModel.saveLoggedInUser(userList[0])
+                                viewModel.saveLoggedInUser(user)
                             } else {
                                 binding.root.snackbar(authResponse.msg!!)
                             }

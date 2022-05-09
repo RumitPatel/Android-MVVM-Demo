@@ -11,7 +11,6 @@ import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.util.*
-import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -36,7 +35,7 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
 
-        binding.editTextEmail.setText("9999999999")
+        binding.editTextEmail.setText("9978084284")
         binding.editTextPassword.setText("111111")
 
         viewModel.getLoggedInUser().observe(this) { user ->
@@ -65,14 +64,14 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 
         if (isValidDataToLogin()) {
 
-            lifecycleScope.launch {
+            lifecycleScope.launchWhenResumed {
                 try {
                     val authResponse = viewModel.userLogin(email, password)
                     authResponse.result?.let {
-                        val userList: ArrayList<User> = it
-                        if (!userList.isNullOrEmpty() && userList[0].firstname.isNotEmpty()
+                        val user: User = it
+                        if (user.firstname.isNotEmpty()
                         ) {
-                            viewModel.saveLoggedInUser(userList[0])
+                            viewModel.saveLoggedInUser(user)
                         } else {
                             binding.rootLayout.snackbar(authResponse.msg!!)
                         }
@@ -80,8 +79,9 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 
                 } catch (e: ApiException) {
                     e.printStackTrace()
+                    toast("Error: " + e.message)
                 } catch (e: NoInternetException) {
-                    e.printStackTrace()
+                    toast("Error: " + e.message)
                 }
             }
         }
