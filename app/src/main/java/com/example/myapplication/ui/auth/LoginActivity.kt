@@ -10,7 +10,10 @@ import com.example.myapplication.R
 import com.example.myapplication.data.db.entities.User
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.ui.home.HomeActivity
-import com.example.myapplication.util.*
+import com.example.myapplication.util.ApiException
+import com.example.myapplication.util.NoInternetException
+import com.example.myapplication.util.snackBar
+import com.example.myapplication.util.toast
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -34,9 +37,6 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
-
-//        binding.editTextEmail.setText("9978084284")
-//        binding.editTextPassword.setText("111111")
 
         viewModel.getLoggedInUser().observe(this) { user ->
             if (user != null) {
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
                         ) {
                             viewModel.saveLoggedInUser(user)
                         } else {
-                            binding.rootLayout.snackbar(authResponse.msg!!)
+                            binding.rootLayout.snackBar(authResponse.msg!!)
                         }
                     }
 
@@ -90,11 +90,11 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
     private fun isValidDataToLogin(): Boolean {
         return when {
             binding.editTextEmail.text.toString().trim().isEmpty() -> {
-                binding.rootLayout.snackbar("Invalid Email")
+                binding.rootLayout.snackBar("Invalid Email")
                 false
             }
             binding.editTextPassword.text.toString().trim().isEmpty() -> {
-                binding.rootLayout.snackbar("Invalid Password")
+                binding.rootLayout.snackBar("Invalid Password")
                 false
             }
             else -> true
