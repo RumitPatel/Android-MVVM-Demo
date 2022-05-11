@@ -12,7 +12,7 @@ import com.example.myapplication.databinding.ActivitySignUpBinding
 import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.util.ApiException
 import com.example.myapplication.util.NoInternetException
-import com.example.myapplication.util.snackbar
+import com.example.myapplication.util.snackBar
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -64,7 +64,7 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
                             ) {
                                 viewModel.saveLoggedInUser(user)
                             } else {
-                                binding.root.snackbar(authResponse.msg!!)
+                                binding.root.snackBar(authResponse.msg!!)
                             }
                         }
 
@@ -81,19 +81,19 @@ class SignUpActivity : AppCompatActivity(), KodeinAware {
     private fun isValidDataToLogin(): Boolean {
         return when {
             binding.editTextName.text.toString().trim().isEmpty() -> {
-                binding.rootLayout.snackbar("Invalid Name")
+                binding.rootLayout.snackBar("Invalid Name")
                 false
             }
             binding.editTextEmail.text.toString().trim().isEmpty() -> {
-                binding.rootLayout.snackbar("Invalid Email")
+                binding.rootLayout.snackBar("Invalid Email")
                 false
             }
             binding.editTextPassword.text.toString().trim().isEmpty() -> {
-                binding.rootLayout.snackbar("Invalid Password")
+                binding.rootLayout.snackBar("Invalid Password")
                 false
             }
             binding.editTextPasswordConfirm.text.toString().trim().isEmpty() -> {
-                binding.rootLayout.snackbar("Invalid Confirm Password")
+                binding.rootLayout.snackBar("Invalid Confirm Password")
                 false
             }
             else -> true
