@@ -17,10 +17,10 @@ interface MyApi {
 
     companion object {
         operator fun invoke(
+            httpLoggingInterceptor: HttpLoggingInterceptor,
             networkConnectionInterceptor: NetworkConnectionInterceptor,
             headerInterceptor: HeaderInterceptor
         ): MyApi {
-            val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
             val okHttpClient = OkHttpClient.Builder().apply {
